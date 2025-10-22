@@ -1,3 +1,13 @@
+FROM node:24-alpine AS builder
+WORKDIR /app
+COPY package*.json .
+RUN npm ci
+COPY . .
+RUN npm run build
+# jetzt wurde ein neuer Ordner /app/dist/ erstellt, in dem die gebaute Webseite liegt
+
 FROM nginx:alpine
-COPY dist/ /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html
 EXPOSE 80
+HEALTHCHECK CMD curl -f http://localhost/ || exit 1
+CMD ["nginx", "-g", "daemon off;"]
