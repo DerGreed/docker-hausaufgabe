@@ -8,7 +8,9 @@
    - ngnix image
    - copy local `dist/` into `/usr/share/nginx/html` in the image
    - expose port 80
+#### New Vesion:
+- Replace the above step 4 with a build step in the Dockerfile
 ## Setup
 1. `docker build -t image-name:tag .`
 2. `docker run --name container-name -d -p 8080:80 image-name:tag`
-3. Open http://localhost:8080
+3. Open http://localhost:8080 (or the IP of your machine)
